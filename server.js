@@ -2,7 +2,7 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     routes = require('./app/routes'),
-    exphbs = require('express3-handlebars'),
+    exphbs = require('express-handlebars'),
     mongoose = require('mongoose'),
     seeder = require('./app/seeder'),
     app = express();
@@ -22,6 +22,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('some-secret-value-here'));
 app.use(app.router);
 app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
 // development only
 if ('development' == app.get('env')) {

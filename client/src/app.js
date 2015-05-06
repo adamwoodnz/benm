@@ -31,7 +31,7 @@ App.prototype.start = function(){
             App.controller = new Controller();
             App.router = new Router({ controller: App.controller });
             App.core.vent.trigger('app:log', 'App: Backbone.history starting');
-            Backbone.history.start();
+            Backbone.history.start({pushState: true});
         }
 
         //new up and views and render for base app here...

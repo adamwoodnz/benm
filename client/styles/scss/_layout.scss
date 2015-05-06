@@ -1,0 +1,16 @@
+#container {
+	@include box-shadow(0 0 5px grey);
+}
+
+.my-contacts-branding {
+	margin: 1em 0;
+}
+
+.my-contacts-brand {
+	display: block;
+	height: 3em;
+
+	> img {
+		height: 100%;
+	}
+}

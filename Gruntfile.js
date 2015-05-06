@@ -104,8 +104,15 @@ module.exports = function(grunt) {
                     src: 'build/<%= pkg.name %>.css.map',
                     dest: 'public/css/<%= pkg.name %>.css.map'
                 }, {
-                    src: 'client/img/*',
+                    expand: true,
+                    flatten: true,
+                    src: ['client/img/*'],
                     dest: 'public/img/'
+                }, {
+                    expand: true,
+                    flatten: true,
+                    src: ['client/requires/uikit/fontawesome*.*', 'client/requires/uikit/FontAwesome*.*'],
+                    dest: 'public/fonts/'
                 }]
             },
             prod: {

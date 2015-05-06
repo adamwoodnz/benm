@@ -10851,4 +10851,26 @@ a.uk-thumbnail:focus {
   list-style-type: decimal;
 }
 
+/* line 1, ../client/styles/scss/_layout.scss */
+#container {
+  -moz-box-shadow: 0 0 5px grey;
+  -webkit-box-shadow: 0 0 5px grey;
+  box-shadow: 0 0 5px grey;
+}
+
+/* line 5, ../client/styles/scss/_layout.scss */
+.my-contacts-branding {
+  margin: 1em 0;
+}
+
+/* line 9, ../client/styles/scss/_layout.scss */
+.my-contacts-brand {
+  display: block;
+  height: 3em;
+}
+/* line 13, ../client/styles/scss/_layout.scss */
+.my-contacts-brand > img {
+  height: 100%;
+}
+
 /*# sourceMappingURL=app.css.map */

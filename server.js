@@ -5,7 +5,12 @@ var express = require('express'),
     exphbs = require('express-handlebars'),
     mongoose = require('mongoose'),
     seeder = require('./app/seeder'),
-    app = express();
+    app = express(),
+    bodyParser = require('body-parser'),
+    cookieParser = require('cookie-parser'),
+    morgan = require('morgan'),
+    methodOverride = require('method-override'),
+    errorHandler = require('errorhandler');
 
 app.set('port', process.env.PORT || 3300);
 app.set('views', __dirname + '/views');
@@ -15,24 +20,26 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('some-secret-value-here'));
-app.use(app.router);
+app.use(morgan('dev'));
+app.use(bodyParser());
+app.use(methodOverride());
+app.use(cookieParser('some-secret-value-here'));
+
+routes.initialize(app, new express.Router());
+
+// static asset routes
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
 // development only
-if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
+if ('development' === app.get('env')) {
+    app.use(errorHandler());
 }
 
 //connect to the db server:
 mongoose.connect('mongodb://localhost/MyApp');
 mongoose.connection.on('open', function() {
-    console.log("Connected to Mongoose...");
+    console.log('Connected to Mongoose.');
 
     // check if the db is empty, if so seed it with some contacts:
     seeder.check();

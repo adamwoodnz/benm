@@ -10,7 +10,7 @@ module.exports = NavView = Marionette.ItemView.extend({
     navigate: function(e) {
         e.preventDefault();
 
-        route = $(e.currentTarget).attr('href').replace(/^\//,'').replace('\#\!\/','') || 'home';
+        route = $(e.currentTarget).attr('href').replace(/^\//,'') || 'home';
 
         window.App.controller[route]();
     }

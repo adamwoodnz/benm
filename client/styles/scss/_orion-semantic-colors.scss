@@ -1,0 +1,273 @@
+/*
+ * OHP Web Internal Colors
+ *
+ * These are the semantic color variables used by ohp web components
+ */
+
+@import "colors";
+
+
+/* Common Variables */
+$cow-box-shadow-color-alpha:						0.85;
+$cow-text-shadow-color-alpha:						0.85;
+
+$cow-glint-box-shadow-color:						$cow-color-white;
+$cow-glint-box-shadow-alpha:						0.3;
+
+$cow-active-box-shadow-color:						$cow-color-black;
+$cow-active-box-shadow-alpha:						0.25;
+
+$cow-state-change-transition-duration:				0.1s;
+
+$cow-tap-highlight-color-tint:						65%;
+
+
+
+/* Page Colors */
+$cow-page-background-color:							$cow-color-white;
+
+
+
+/* Text Colors */
+$cow-text-color:									$cow-color-black;
+$cow-text-color_disabled:							$cow-color-grey-dark;
+$cow-text-color_inverse:							$cow-color-white;
+
+$cow-secondary-text-color:							$cow-color-grey-darker;
+$cow-label-text-color:								$cow-color-grey-darker;
+$cow-help-text-color:								$cow-color-grey-darker;
+$cow-units-text-color:								$cow-color-grey-darker;
+$cow-code-text-color:								$cow-color-grey-darker;
+$cow-dataset-tertiary-text-color:					$cow-color-grey-darker;
+$cow-heading-text-color:							$cow-color-teal;
+$cow-placeholder-text-color:						$cow-color-grey-dark;
+$cow-error-text-color:								$cow-color-red;
+$cow-important-text-color:							$cow-color-red;
+$cow-mandatory-text-color:							$cow-color-red;
+$cow-link-text-color:								$cow-color-blue;
+$cow-success-text-color:							$cow-color-green;
+$cow-accentuated-text-color:						$cow-color-green;
+
+$cow-text-shadow-color:								rgba($cow-color-white, $cow-text-shadow-color-alpha);
+$cow-text-shadow-color_inverse:						rgba($cow-color-black, $cow-text-shadow-color-alpha);
+
+
+
+/* Selected/Highlighted Colors */
+$cow-selected-background-color:						$cow-color-blue-light;
+
+$cow-highlighted-background-color:					$cow-color-blue;
+$cow-highlighted-text-color:						$cow-text-color_inverse;
+
+
+
+/* Container Colors */
+$cow-container-border-color:						$cow-color-grey-light;
+$cow-container-border-color_focus:					$cow-color-blue;
+$cow-container-border-color_hover:					$cow-color-blue;
+$cow-container-border-color_error:					$cow-color-red;
+$cow-container-internal-border-color:				$cow-color-grey-lighter;
+
+$cow-container-header-background-color:				$cow-color-grey-lighter;
+$cow-container-body-background-color:				$cow-color-white;
+$cow-container-footer-background-color:				$cow-color-grey-lighter;
+
+
+
+/* Overlay Colors */
+$cow-overlay-box-shadow-color-alpha:				0.7;
+$cow-overlay-box-shadow-color:						rgba($cow-color-black, $cow-overlay-box-shadow-color-alpha);
+
+$cow-overlay-border-color:							$cow-color-grey-dark;
+$cow-overlay-modal-mask-color:						$cow-color-white;
+// TODO find opacity and move here    -  $mask-opacity is defined in _base.scss .. it has a value of 0.8. Should that live in this page? Deprecate base version?
+
+$cow-underlay-background-color:						$cow-color-black;
+$cow-underlay-opacity:								0.15;
+
+/* Table Colors */
+$cow-table-zebra-stripe-odd-background-color:		$cow-color-grey-lightest;
+$cow-table-zebra-stripe-even-background-color:		$cow-color-white;
+
+
+
+/* Edit Section Colors */
+$cow-edit-section-border-top-color:					$cow-color-white;
+$cow-edit-section-border-bottom-color:				$cow-color-grey-light;
+
+$cow-edit-section-background-color:					$cow-color-grey-lightest;
+$cow-edit-section-secondary-field-background-color:	$cow-color-grey-lighter;
+
+
+
+/* Form Control Colors */
+$cow-form-control-border-color-shade:				15%;
+$cow-form-control-border-color-tint:				15%;
+
+$cow-form-control-border-color:						$cow-color-grey;
+$cow-form-control-border-top-color:					shade($cow-form-control-border-color, $cow-form-control-border-color-shade);
+$cow-form-control-border-right-color:				$cow-form-control-border-color;
+$cow-form-control-border-bottom-color:				tint($cow-form-control-border-color, $cow-form-control-border-color-tint);
+$cow-form-control-border-left-color:				$cow-form-control-border-color;
+
+$cow-form-control-border-color_focus:				$cow-color-blue;
+$cow-form-control-border-top-color_focus:			shade($cow-form-control-border-color_focus, $cow-form-control-border-color-shade);
+$cow-form-control-border-right-color_focus:			$cow-form-control-border-color_focus;
+$cow-form-control-border-bottom-color_focus:		tint($cow-form-control-border-color_focus, $cow-form-control-border-color-tint);
+$cow-form-control-border-left-color_focus:			$cow-form-control-border-color_focus;
+
+$cow-form-control-border-color_disabled:			$cow-color-grey-light;
+$cow-form-control-border-top-color_disabled:		$cow-form-control-border-color_disabled;
+$cow-form-control-border-right-color_disabled:		$cow-form-control-border-color_disabled;
+$cow-form-control-border-bottom-color_disabled:		$cow-form-control-border-color_disabled;
+$cow-form-control-border-left-color_disabled:		$cow-form-control-border-color_disabled;
+
+$cow-form-control-border-color_error:				$cow-color-red;
+$cow-form-control-border-top-color_error:			shade($cow-form-control-border-color_error, $cow-form-control-border-color-shade);
+$cow-form-control-border-right-color_error:			$cow-form-control-border-color_error;
+$cow-form-control-border-bottom-color_error:		tint($cow-form-control-border-color_error, $cow-form-control-border-color-tint);
+$cow-form-control-border-left-color_error:			$cow-form-control-border-color_error;
+
+$cow-form-control-box-shadow-color_focus:			rgba($cow-form-control-border-color_focus, $cow-box-shadow-color-alpha);
+$cow-form-control-box-shadow-color_error:			rgba($cow-form-control-border-color_error, $cow-box-shadow-color-alpha);
+
+$cow-form-control-background-color:					$cow-color-white;
+
+
+
+/* Button Colors */
+// For buttons, the top and bottom border colors need to be swapped around from the standard form control colors.
+$cow-button-border-color-shade:						15%;
+$cow-button-border-color-tint:						15%;
+
+$cow-button-border-top-color:						$cow-form-control-border-bottom-color;
+$cow-button-border-right-color:						$cow-form-control-border-right-color;
+$cow-button-border-bottom-color:					$cow-form-control-border-top-color;
+$cow-button-border-left-color:						$cow-form-control-border-left-color;
+
+$cow-button-border-top-color_hover:					$cow-form-control-border-bottom-color_focus;
+$cow-button-border-right-color_hover:				$cow-form-control-border-right-color_focus;
+$cow-button-border-bottom-color_hover:				$cow-form-control-border-top-color_focus;
+$cow-button-border-left-color_hover:				$cow-form-control-border-left-color_focus;
+
+$cow-button-border-top-color_error:					$cow-form-control-border-bottom-color_error;
+$cow-button-border-right-color_error:				$cow-form-control-border-right-color_error;
+$cow-button-border-bottom-color_error:				$cow-form-control-border-top-color_error;
+$cow-button-border-left-color_error:				$cow-form-control-border-left-color_error;
+
+$cow-button-box-shadow-color_focus:					rgba($cow-form-control-border-color_focus, $cow-box-shadow-color-alpha);
+
+$cow-button-background-color:						$cow-color-white;
+
+
+/* Primary Button */
+$cow-button-primary-border-color: 					$cow-color-blue;
+$cow-button-primary-border-top-color: 				tint($cow-button-primary-border-color, $cow-button-border-color-tint);
+$cow-button-primary-border-right-color: 			$cow-button-primary-border-color;
+$cow-button-primary-border-bottom-color: 			shade($cow-button-primary-border-color, $cow-button-border-color-shade);
+$cow-button-primary-border-left-color: 				$cow-button-primary-border-color;
+
+$cow-button-primary-border-color_disabled:			$cow-color-grey;
+
+$cow-button-primary-background-color: 				$cow-color-blue;
+$cow-button-primary-background-color_disabled: 		tint(scale-saturation($cow-button-primary-background-color, -30%), 85%);
+
+$cow-button-primary-box-shadow-alpha_focus:			1;
+
+
+/* Secondary Button	*/
+$cow-button-secondary-border-color: 				$cow-color-grey-dark;
+$cow-button-secondary-border-top-color: 			tint($cow-button-secondary-border-color, $cow-button-border-color-tint);
+$cow-button-secondary-border-right-color: 			$cow-button-secondary-border-color;
+$cow-button-secondary-border-bottom-color: 			shade($cow-button-secondary-border-color, $cow-button-border-color-shade);
+$cow-button-secondary-border-left-color: 			$cow-button-secondary-border-color;
+
+$cow-button-secondary-border-color_focus: 			$cow-color-blue;
+$cow-button-secondary-border-top-color_focus: 		tint($cow-button-secondary-border-color_focus, $cow-button-border-color-tint);
+$cow-button-secondary-border-right-color_focus:		$cow-button-secondary-border-color_focus;
+$cow-button-secondary-border-bottom-color_focus: 	shade($cow-button-secondary-border-color_focus, $cow-button-border-color-tint);
+$cow-button-secondary-border-left-color_focus:		$cow-button-secondary-border-color_focus;
+
+$cow-button-secondary-border-color_disabled:		$cow-color-grey;
+
+$cow-button-secondary-background-color: 			$cow-color-grey-lightest;
+$cow-button-secondary-background-color_hover: 		$cow-color-grey-lighter;
+$cow-button-secondary-background-color_disabled:	tint($cow-button-secondary-background-color, 30%);
+
+$cow-button-secondary-box-shadow-alpha_focus:		0.85;
+
+$cow-button-secondary-text-color:					$cow-color-grey-darkest;
+
+
+
+/* Separator Colors */
+$cow-separator-color:								$cow-color-grey-light;
+$cow-edit-section-secondary-field-separator-color:	$cow-color-grey;
+$cow-container-footer-separator-color:				$cow-color-grey;
+
+$cow-horizontal-rule-color:							$cow-color-grey-light;
+
+
+
+/* Notification Colors */
+$cow-notification-info-border-color:				$cow-color-blue;
+$cow-notification-info-box-shadow-color_focus:		rgba($cow-notification-info-border-color, $cow-box-shadow-color-alpha);
+$cow-notification-info-background-color:			$cow-color-blue-light;
+
+$cow-notification-success-border-color:				$cow-color-green;
+$cow-notification-success-box-shadow-color_focus:	rgba($cow-notification-success-border-color, $cow-box-shadow-color-alpha);
+$cow-notification-success-background-color:			$cow-color-green-light;
+
+$cow-notification-warning-border-color:				$cow-color-copper;
+$cow-notification-warning-box-shadow-color_focus:	rgba($cow-notification-warning-border-color, $cow-box-shadow-color-alpha);
+$cow-notification-warning-background-color:			$cow-color-orange-light;
+
+$cow-notification-error-border-color:				$cow-color-red;
+$cow-notification-error-box-shadow-color_focus:		rgba($cow-notification-error-border-color, $cow-box-shadow-color-alpha);
+$cow-notification-error-background-color:			$cow-color-red-light;
+
+
+
+/* Badge Colors */
+$cow-badge-info-border-color:						$cow-notification-info-border-color;
+$cow-badge-info-box-shadow-color_focus:				$cow-notification-info-box-shadow-color_focus;
+$cow-badge-info-background-color:					$cow-notification-info-background-color;
+
+$cow-badge-success-border-color:					$cow-notification-success-border-color;
+$cow-badge-success-box-shadow-color_focus:			$cow-notification-success-box-shadow-color_focus;
+$cow-badge-success-background-color:				$cow-notification-success-background-color;
+
+$cow-badge-warning-border-color:					$cow-notification-warning-border-color;
+$cow-badge-warning-box-shadow-color_focus:			$cow-notification-warning-box-shadow-color_focus;
+$cow-badge-warning-background-color:				$cow-notification-warning-background-color;
+
+$cow-badge-alert-border-color:						$cow-notification-error-border-color;
+$cow-badge-alert-box-shadow-color_focus:			$cow-notification-error-box-shadow-color_focus;
+$cow-badge-alert-background-color:					$cow-notification-error-background-color;
+
+
+
+/* Icon Colors */
+$cow-icon-link-outline-color:						$cow-color-grey;
+
+
+
+/* Scrollbar Colors */
+$cow-scrollbar-thumb-color:							$cow-color-grey-darker;
+$cow-scrollbar-thumb-opacity:					 	0.5;
+
+$cow-scrollbar-arrow-color:							$cow-color-grey-darker;
+$cow-scrollbar-arrow-color_focus-hover:				$cow-color-blue;
+$cow-scrollbar-arrow-opacity: 						0.75;
+$cow-scrollbar-arrow-opacity_focus-hover: 			1;
+
+
+
+/* Widget Specific Colors */
+$cow-widget-datetime-cal-today-background-color:	$cow-color-grey-lighter;
+
+$cow-widget-tag-background-color:					$cow-color-grey-lighter;
+$cow-widget-tag-border-color:						$cow-color-grey;
+
+$cow-widget-number-of-indicator-background-color:	$cow-color-grey-darker;
+

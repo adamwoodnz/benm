@@ -1,6 +1,6 @@
 var Marionette = require('backbone.marionette');
 
-var itemView = Marionette.ItemView.extend({
+var contactView = Marionette.ItemView.extend({
     template: require('../../templates/contact_small.hbs'),
 
     initialize: function() {
@@ -17,9 +17,9 @@ var itemView = Marionette.ItemView.extend({
     }
 });
 
-module.exports = CollectionView = Marionette.CollectionView.extend({
+module.exports = ContactsView = Marionette.CollectionView.extend({
     initialize: function() {
         this.listenTo(this.collection, 'change', this.render);
     },
-    itemView: itemView
+    itemView: contactView
 });

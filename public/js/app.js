@@ -27385,6 +27385,7 @@ App.prototype.start = function(){
         contacts.fetch({
             success: function() {
                 App.data.contacts = contacts;
+                //console.log(App.data.contacts);
                 App.core.vent.trigger('app:start');
             }
         });
@@ -27410,7 +27411,7 @@ App.prototype.start = function(){
     App.core.start();
 };
 
-},{"./collections/contacts":2,"./controller":3,"./models/contact":5,"./router":6}],2:[function(require,module,exports){
+},{"./collections/contacts":2,"./controller":4,"./models/contact":6,"./router":8}],2:[function(require,module,exports){
 var Backbone = require('backbone'),
     ContactModel = require('../models/contact');
 
@@ -27419,19 +27420,35 @@ module.exports = ContactsCollection = Backbone.Collection.extend({
     url: '/api/contacts'
 });
 
-},{"../models/contact":5}],3:[function(require,module,exports){
+},{"../models/contact":6}],3:[function(require,module,exports){
+var Backbone = require('backbone'),
+    DocumentModel = require('../models/document');
+
+module.exports = DocumentsCollection = Backbone.Collection.extend({
+    model:  DocumentModel,
+    url: '/api/documents'
+});
+
+},{"../models/document":7}],4:[function(require,module,exports){
 var Marionette = require('backbone.marionette'),
     ContactsView = require('./views/contacts'),
     ContactDetailsView = require('./views/contact_details'),
     AddContactView = require('./views/add'),
-    NavView = require('./views/nav');
+    NavMainView = require('./views/nav-main'),
+    NavSideView = require('./views/nav-side'),
+    DocumentsView = require('./views/documents'),
+    DocumentsCollection = require('./collections/documents');
 
 module.exports = Controller = Marionette.Controller.extend({
     initialize: function() {
         App.core.vent.trigger('app:log', 'Controller: Initializing');
         window.App.views.contactsView = new ContactsView({ collection: window.App.data.contacts });
-        window.App.views.navView = new NavView();
-        this.renderNav(window.App.views.navView);
+
+        window.App.views.navMainView = new NavMainView();
+        this.renderNav(window.App.views.navMainView, 'nav-main');
+
+        window.App.views.navSideView = new NavSideView();
+        this.renderNav(window.App.views.navSideView, 'nav-side');
     },
 
     home: function() {
@@ -27455,15 +27472,38 @@ module.exports = Controller = Marionette.Controller.extend({
         window.App.router.navigate('/add');
     },
 
+    documents: function() {
+        var documents = new DocumentsCollection(),
+            controller = this;
+
+        documents.fetch({
+            success: function() {
+                App.data.documents = documents;
+                //console.log(App.data.documents);
+                App.core.vent.trigger('app:log', 'Controller: "Documents" route hit.');
+                var view = new DocumentsView({ collection: App.data.documents });
+                controller.renderView(view);
+                window.App.router.navigate('/documents');
+            }
+        });
+    },
+
+    document: function(id) {
+        App.core.vent.trigger('app:log', 'Controller: "Document Details" route hit.');
+        var view = new DocumentDetailsView({ model: window.App.data.documents.get(id)});
+        this.renderView(view);
+        window.App.router.navigate('/document/' + id);
+    },
+
     renderView: function(view) {
         this.destroyCurrentView(view);
         App.core.vent.trigger('app:log', 'Controller: Rendering new view.');
         $('#app').html(view.render().el);
     },
 
-    renderNav: function(view) {
-        App.core.vent.trigger('app:log', 'Controller: Rendering nav.');
-        $('#nav').html(view.render().el);
+    renderNav: function(view, id) {
+        App.core.vent.trigger('app:log', 'Controller: Rendering ' + id + '.');
+        $('#' + id).html(view.render().el);
     },
 
     destroyCurrentView: function(view) {
@@ -27475,12 +27515,12 @@ module.exports = Controller = Marionette.Controller.extend({
     }
 });
 
-},{"./views/add":7,"./views/contact_details":8,"./views/contacts":9,"./views/nav":10}],4:[function(require,module,exports){
+},{"./collections/documents":3,"./views/add":9,"./views/contact_details":10,"./views/contacts":11,"./views/documents":12,"./views/nav-main":13,"./views/nav-side":14}],5:[function(require,module,exports){
 var App = require('./app');
 var myapp = new App();
 myapp.start();
 
-},{"./app":1}],5:[function(require,module,exports){
+},{"./app":1}],6:[function(require,module,exports){
 var Backbone = require('backbone');
 
 module.exports = ContactModel = Backbone.Model.extend({
@@ -27488,24 +27528,40 @@ module.exports = ContactModel = Backbone.Model.extend({
     urlRoot: 'api/contacts'
 });
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+var Backbone = require('backbone');
+
+module.exports = DocumentModel = Backbone.Model.extend({
+    idAttribute: '_id',
+    urlRoot: 'api/documents'
+});
+
+},{}],8:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 module.exports = Router = Marionette.AppRouter.extend({
     appRoutes: {
         ''  : 'home',
         'details/:id' : 'details',
-        'add' : 'add'
+        'add' : 'add',
+        'documents': 'documents',
+        'document/:id' : 'document'
     }
 });
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 module.exports = AddView = Marionette.ItemView.extend({
     template: require('../../templates/add.hbs'),
     events: {
-        'click a.save-button': 'save'
+        'click a.save-button': 'save',
+        'click a.back': 'goBack'
+    },
+
+    goBack: function(e) {
+        e.preventDefault();
+        window.App.controller.home();
     },
 
     save: function(e) {
@@ -27525,11 +27581,12 @@ module.exports = AddView = Marionette.ItemView.extend({
     }
 });
 
-},{"../../templates/add.hbs":11}],8:[function(require,module,exports){
+},{"../../templates/add.hbs":15}],10:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
 module.exports = ContactDetailsView = Marionette.ItemView.extend({
     template: require('../../templates/contact_details.hbs'),
+
     events: {
         'click a.back': 'goBack',
         'click a.delete': 'deleteContact'
@@ -27539,6 +27596,7 @@ module.exports = ContactDetailsView = Marionette.ItemView.extend({
         e.preventDefault();
         window.App.controller.home();
     },
+
     deleteContact: function(e) {
         e.preventDefault();
         console.log('Deleting contact');
@@ -27551,10 +27609,10 @@ module.exports = ContactDetailsView = Marionette.ItemView.extend({
     }
 });
 
-},{"../../templates/contact_details.hbs":12}],9:[function(require,module,exports){
+},{"../../templates/contact_details.hbs":16}],11:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
-var itemView = Marionette.ItemView.extend({
+var contactView = Marionette.ItemView.extend({
     template: require('../../templates/contact_small.hbs'),
 
     initialize: function() {
@@ -27571,18 +27629,51 @@ var itemView = Marionette.ItemView.extend({
     }
 });
 
-module.exports = CollectionView = Marionette.CollectionView.extend({
+module.exports = ContactsView = Marionette.CollectionView.extend({
     initialize: function() {
         this.listenTo(this.collection, 'change', this.render);
     },
-    itemView: itemView
+    itemView: contactView
 });
 
-},{"../../templates/contact_small.hbs":13}],10:[function(require,module,exports){
+},{"../../templates/contact_small.hbs":17}],12:[function(require,module,exports){
 var Marionette = require('backbone.marionette');
 
-module.exports = NavView = Marionette.ItemView.extend({
-    template: require('../../templates/nav.hbs'),
+var documentView = Marionette.ItemView.extend({
+    template: require('../../templates/document.hbs'),
+
+    initialize: function() {
+        this.listenTo(this.model, 'change', this.render);
+    },
+
+    events: {
+        //'click .document': 'showDocument',
+        'click .back': 'goBack'
+    },
+
+    goBack: function(e) {
+        e.preventDefault();
+        window.App.controller.home();
+    },
+
+    showDocument: function() {
+        window.App.core.vent.trigger('app:log', 'Documents View: showDocument hit.');
+        window.App.controller.document(this.model.id);
+    }
+});
+
+module.exports = DocumentsView = Marionette.CollectionView.extend({
+    initialize: function() {
+        this.listenTo(this.collection, 'change', this.render);
+    },
+    itemView: documentView
+});
+
+},{"../../templates/document.hbs":18}],13:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+module.exports = NavMainView = Marionette.ItemView.extend({
+    template: require('../../templates/nav-main.hbs'),
 
     events: {
         'click a': 'navigate'
@@ -27591,13 +27682,56 @@ module.exports = NavView = Marionette.ItemView.extend({
     navigate: function(e) {
         e.preventDefault();
 
-        route = $(e.currentTarget).attr('href').replace(/^\//,'').replace('\#\!\/','') || 'home';
+        var $navItem = $(e.currentTarget),
+            activeClass = 'uk-active';
 
-        window.App.controller[route]();
+        route = $navItem.attr('href').replace(/^\//,'') || 'home';
+
+        try {
+           window.App.controller[route]();
+
+           $('li.' + activeClass).removeClass(activeClass);
+
+            $navItem.parent().addClass(activeClass);
+        }
+        catch (e) {
+           window.App.core.vent.trigger('app:log', 'Main Nav View: route not found.');
+        }
     }
 });
 
-},{"../../templates/nav.hbs":14}],11:[function(require,module,exports){
+},{"../../templates/nav-main.hbs":19}],14:[function(require,module,exports){
+var Marionette = require('backbone.marionette');
+
+module.exports = NavSideView = Marionette.ItemView.extend({
+    template: require('../../templates/nav-side.hbs'),
+
+    events: {
+        'click a': 'navigate'
+    },
+
+    navigate: function(e) {
+        e.preventDefault();
+
+        var $navItem = $(e.currentTarget),
+            activeClass = 'uk-active';
+
+        route = $navItem.attr('href').replace(/^\//,'') || 'home';
+
+        try {
+           window.App.controller[route]();
+
+           $('li.' + activeClass).removeClass(activeClass);
+
+            $navItem.parent().addClass(activeClass);
+        }
+        catch (e) {
+           window.App.core.vent.trigger('app:log', 'Side Nav View: route not found.');
+        }
+    }
+});
+
+},{"../../templates/nav-side.hbs":20}],15:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -27606,10 +27740,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<div class=\"add_contact\">\n    <label for=\"name_first\">First Name:</label> <input type=\"text\" id=\"name_first\" /><br/>\n    <label for=\"name_last\">Last Name:</label> <input type=\"text\" id=\"name_last\" /><br/>\n    <label for=\"email\">Email:</label> <input type=\"text\" id=\"email\" /><br/>\n    <label for=\"phone\">Phone:</label> <input type=\"text\" id=\"phone\" /><br/>\n    <br/>\n    <a href=\"#\" class=\"save-button\">Save Contact</a> | <a href=\"#\"><< Back</a>\n</div>\n";
+  return "<div class=\"add_contact\">\n    <label for=\"name_first\">First Name:</label> <input type=\"text\" id=\"name_first\" /><br/>\n    <label for=\"name_last\">Last Name:</label> <input type=\"text\" id=\"name_last\" /><br/>\n    <label for=\"email\">Email:</label> <input type=\"text\" id=\"email\" /><br/>\n    <label for=\"phone\">Phone:</label> <input type=\"text\" id=\"phone\" /><br/>\n    <br/>\n    <a class=\"uk-button uk-button-large back\" href=\"#\">Back</a> <a class=\"uk-button uk-button-primary uk-button-large save-button\" href=\"#\">Save Contact</a>\n</div>\n";
   });
 
-},{"hbsfy/runtime":18}],12:[function(require,module,exports){
+},{"hbsfy/runtime":24}],16:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -27634,11 +27768,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack2 = helpers.phone) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.phone; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "<br/><br/>\n\n</div>\n\n<a href=\"#\" class=\"back\"><< Back</a> | <a href=\"#\" class=\"delete\">Delete Contact</a>\n";
+    + "<br/><br/>\n\n</div>\n\n<a class=\"uk-button uk-button-large back\" href=\"#\">Back</a> <a class=\"uk-button uk-button-primary uk-button-large delete\" href=\"#\">Delete Contact</a>\n";
   return buffer;
   });
 
-},{"hbsfy/runtime":18}],13:[function(require,module,exports){
+},{"hbsfy/runtime":24}],17:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -27663,7 +27797,28 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return buffer;
   });
 
-},{"hbsfy/runtime":18}],14:[function(require,module,exports){
+},{"hbsfy/runtime":24}],18:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var Handlebars = require('hbsfy/runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"document uk-panel uk-panel-box uk-margin-bottom\">\n    <strong>Title:</strong> ";
+  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "<br/>\n    <strong>Author:</strong> ";
+  if (stack1 = helpers.author) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.author; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "<br/>\n</div>\n";
+  return buffer;
+  });
+
+},{"hbsfy/runtime":24}],19:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -27672,10 +27827,22 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<ul class=\"uk-navbar-nav uk-hidden-small\">\n	<li class=\"uk-active\">\n		<a href=\"/\" class=\"contact-list\">Contact List</a>\n	</li>\n	<li>\n		<a href=\"/add\">New Contact</a>\n	</li>\n</ul>\n<a href=\"#offcanvas\" class=\"uk-navbar-toggle uk-visible-small\" data-uk-offcanvas=\"\"></a>\n<div class=\"uk-navbar-brand uk-navbar-center uk-visible-small\">Brand</div>\n";
+  return "<ul class=\"uk-navbar-nav\">\n	<li class=\"uk-active\">\n		<a href=\"/\" class=\"contact-list\">Contact List</a>\n	</li>\n	<li>\n		<a href=\"/add\">New Contact</a>\n	</li>\n</ul>\n<a href=\"#offcanvas\" class=\"uk-navbar-toggle uk-visible-small\" data-uk-offcanvas=\"\"></a>\n<div class=\"uk-navbar-brand uk-navbar-center uk-visible-small\">Brand</div>\n";
   });
 
-},{"hbsfy/runtime":18}],15:[function(require,module,exports){
+},{"hbsfy/runtime":24}],20:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var Handlebars = require('hbsfy/runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<div class=\"uk-panel uk-panel-box\">\n    <ul class=\"uk-nav uk-nav-side\">\n    	<li><a href=\"documents\">Documents</a></li>\n    	<li><a href=\"encounters\">Encounters</a></li>\n    </ul>\n</div>\n";
+  });
+
+},{"hbsfy/runtime":24}],21:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -27843,7 +28010,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],16:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -27951,7 +28118,7 @@ return Handlebars;
 
 };
 
-},{}],17:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -28036,7 +28203,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],18:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var hbsBase = require("handlebars/lib/handlebars/base");
 var hbsUtils = require("handlebars/lib/handlebars/utils");
 var hbsRuntime = require("handlebars/lib/handlebars/runtime");
@@ -28047,5 +28214,5 @@ hbsRuntime.attach(Handlebars);
 
 module.exports = Handlebars;
 
-},{"handlebars/lib/handlebars/base":15,"handlebars/lib/handlebars/runtime":16,"handlebars/lib/handlebars/utils":17}]},{},[4])
+},{"handlebars/lib/handlebars/base":21,"handlebars/lib/handlebars/runtime":22,"handlebars/lib/handlebars/utils":23}]},{},[5])
 ;

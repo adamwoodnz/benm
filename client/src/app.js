@@ -20,6 +20,7 @@ App.prototype.start = function(){
         contacts.fetch({
             success: function() {
                 App.data.contacts = contacts;
+                //console.log(App.data.contacts);
                 App.core.vent.trigger('app:start');
             }
         });

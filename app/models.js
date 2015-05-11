@@ -12,6 +12,12 @@ var Contact = new Schema({
     gravatar:   { type: String }
 });
 
+var Document = new Schema({
+    title:      { type: String },
+    author:   { type: String }
+});
+
 module.exports = {
-    Contact: mongoose.model('Contact', Contact)
+    Contact: mongoose.model('Contact', Contact),
+    Document: mongoose.model('Document', Document)
 };

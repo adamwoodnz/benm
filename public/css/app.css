@@ -10782,75 +10782,6 @@ a.uk-thumbnail:focus {
     page-break-after: avoid;
   }
 }
-/* line 1, ../client/styles/scss/_m-contacts.scss */
-.clear {
-  clear: both;
-}
-
-/* line 5, ../client/styles/scss/_m-contacts.scss */
-#content {
-  height: 300px;
-}
-
-/* line 9, ../client/styles/scss/_m-contacts.scss */
-.contact_small,
-.contact_full {
-  cursor: pointer;
-  width: 260px;
-  float: left;
-  border: solid 1px #c0c0c0;
-  padding: 5px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-/* line 20, ../client/styles/scss/_m-contacts.scss */
-.contact_small:hover {
-  border: solid 1px blue;
-}
-
-/* line 24, ../client/styles/scss/_m-contacts.scss */
-.contact_small img {
-  float: left;
-  width: 45px;
-  height: 45px;
-  margin-right: 5px;
-}
-
-/* line 31, ../client/styles/scss/_m-contacts.scss */
-.contact_full {
-  float: none;
-  height: 325px;
-}
-
-/* line 36, ../client/styles/scss/_m-contacts.scss */
-.contact_full img {
-  margin-left: 5px;
-}
-
-/* line 40, ../client/styles/scss/_m-contacts.scss */
-.add_contact label {
-  display: inline-block;
-  width: 120px;
-  float: left;
-  clear: left;
-}
-
-/* line 47, ../client/styles/scss/_m-contacts.scss */
-#output {
-  margin-top: 2em;
-  font-size: .9em;
-  border: solid 1px #c0c0c0;
-  background-color: #f0f0f0;
-  padding: 5px;
-}
-
-/* line 55, ../client/styles/scss/_m-contacts.scss */
-#output li {
-  margin-left: 30px;
-  list-style-type: decimal;
-}
-
 /* line 1, ../client/styles/scss/_layout.scss */
 #container {
   -moz-box-shadow: 0 0 5px grey;
@@ -10871,6 +10802,65 @@ a.uk-thumbnail:focus {
 /* line 13, ../client/styles/scss/_layout.scss */
 .my-contacts-brand > img {
   height: 100%;
+}
+
+/* line 1, ../client/styles/scss/_m-contacts.scss */
+.contact_small,
+.contact_full {
+  cursor: pointer;
+  width: 260px;
+  float: left;
+  border: solid 1px #c0c0c0;
+  padding: 5px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+/* line 12, ../client/styles/scss/_m-contacts.scss */
+.contact_small:hover {
+  border: solid 1px blue;
+}
+
+/* line 16, ../client/styles/scss/_m-contacts.scss */
+.contact_small img {
+  float: left;
+  width: 45px;
+  height: 45px;
+  margin-right: 5px;
+}
+
+/* line 23, ../client/styles/scss/_m-contacts.scss */
+.contact_full {
+  float: none;
+  height: 325px;
+}
+
+/* line 28, ../client/styles/scss/_m-contacts.scss */
+.contact_full img {
+  margin-left: 5px;
+}
+
+/* line 32, ../client/styles/scss/_m-contacts.scss */
+.add_contact label {
+  display: inline-block;
+  width: 120px;
+  float: left;
+  clear: left;
+}
+
+/* line 39, ../client/styles/scss/_m-contacts.scss */
+#output {
+  margin-top: 2em;
+  font-size: .9em;
+  border: solid 1px #c0c0c0;
+  background-color: #f0f0f0;
+  padding: 5px;
+}
+
+/* line 47, ../client/styles/scss/_m-contacts.scss */
+#output li {
+  margin-left: 30px;
+  list-style-type: decimal;
 }
 
 /*# sourceMappingURL=app.css.map */

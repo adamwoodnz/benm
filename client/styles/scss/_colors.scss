@@ -1,0 +1,55 @@
+/* 
+ * Colors
+ * 
+ * These are the colors that will be used within the semantic color variables. 
+ * They are derived from the corporate brand colors. 
+ * They should ideally not be used directly, instead use _semantic-colors
+ */
+ 
+@import "brand-colors";
+
+/* Main Color Set */
+$cow-color-white:				#FFFFFF;
+$cow-color-black:				#000000;
+$cow-color-teal: 				$cow-brand-color-teal;
+$cow-color-blue: 				#0062AE;
+$cow-color-green: 				#007400;
+$cow-color-orange:				#E88B00;
+$cow-color-copper:				#8B5300;
+$cow-color-red:					#BE0000;
+
+$cow-tint-light: 				85%; // 15% tint of the colour, SASS takes the opposite, i.e. the amount to reduce the colour by (100% - 15% = 85%)
+$cow-color-teal-light:			tint($cow-color-teal, 	$cow-tint-light);
+$cow-color-blue-light:			tint($cow-color-blue, 	$cow-tint-light);
+$cow-color-green-light:			tint($cow-color-green,  $cow-tint-light);
+$cow-color-orange-light:		tint($cow-color-orange, $cow-tint-light);
+$cow-color-red-light:			tint($cow-color-red, 	$cow-tint-light);
+
+$cow-color-grey-lightest:		$cow-brand-color-grey-extra-light;
+$cow-color-grey-lighter:		mix($cow-brand-color-grey-extra-light, $cow-brand-color-grey-light, 50%);
+$cow-color-grey-light:			$cow-brand-color-grey-light;
+$cow-color-grey:				mix($cow-brand-color-grey-light, $cow-brand-color-grey-mid, 50%);
+$cow-color-grey-dark:			$cow-brand-color-grey-mid;
+$cow-color-grey-darker:			$cow-brand-color-grey-dark;
+$cow-color-grey-darkest:		mix($cow-brand-color-grey-dark, $cow-color-black, 50%);
+
+
+/* Chart Color Set */
+$cow-color-chart-purple:			#614C7C;
+$cow-color-chart-green:				#758F40;
+$cow-color-chart-blue:				#376192;
+$cow-color-chart-brown:				#955B47;
+$cow-color-chart-pink:				#EA4488;
+$cow-color-chart-cyan:				#3DC2C2;
+$cow-color-chart-grey:				#808080;
+$cow-color-chart-black:				$cow-color-black;
+
+$cow-tint-chart-light:				25%;
+$cow-color-chart-purple-light:		tint($cow-color-chart-purple, 	$cow-tint-chart-light);
+$cow-color-chart-green-light:		tint($cow-color-chart-green, 	$cow-tint-chart-light);
+$cow-color-chart-blue-light:		tint($cow-color-chart-blue, 	$cow-tint-chart-light);
+$cow-color-chart-brown-light:		tint($cow-color-chart-brown, 	$cow-tint-chart-light);
+$cow-color-chart-pink-light:		tint($cow-color-chart-pink,		$cow-tint-chart-light);
+$cow-color-chart-cyan-light:		tint($cow-color-chart-cyan, 	$cow-tint-chart-light);
+$cow-color-chart-grey-light:		tint($cow-color-chart-grey, 	$cow-tint-chart-light);
+$cow-color-chart-black-light:		tint($cow-color-chart-black, 	$cow-tint-chart-light);
